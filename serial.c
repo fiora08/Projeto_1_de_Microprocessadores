@@ -20,7 +20,7 @@ void serial_inicializar(unsigned int valor_ubrr) {
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00) | (1 << UPM01); //  define os 8 bits  de dados  e ativa a paridade par 
 }
 
-ISR(USART_RX_vect) {
+ISR(USART0_RX_vect) {
 	char dado = UDR0; // captura o byte que acabou de chegar no rx 
 	unsigned char prox = (esc_ptr + 1) % TAM_BUFFER;  // calcula o proximo na fila. 
 	if (prox != ler_ptr) { // se o buffer não estiver cheio 
