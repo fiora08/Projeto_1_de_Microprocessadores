@@ -53,3 +53,20 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+lib/README
+test/README
+
+# VS Code / VSCodium
+.vscode/
+.history/
+*.log
+
+# Arquivos de compilação e temporários
+*.hex
+*.elf
+*.o

@@ -1,0 +1,1 @@
+void mascarar_senha(void);
