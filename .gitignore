@@ -1,72 +1,80 @@
-# Prerequisites
+# =========================
+# Build / compilação geral
+# =========================
+*.o
+*.obj
+*.ko
+*.elf
+*.hex
+*.out
+*.exe
+*.app
+
+# Dependências geradas
 *.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
+# Bibliotecas compiladas
 *.a
 *.la
 *.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
+*.lib
 *.so
 *.so.*
+*.dll
 *.dylib
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
+# Linker / debug
+*.ilk
+*.map
+*.exp
 *.dSYM/
 *.su
 *.idb
 *.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
 *.dwo
 
+# Coverage (opcional)
+*.gcno
+*.gcda
+*.gcov
+
+# =========================
 # PlatformIO
+# =========================
 .pio/
 .pioenvs/
 .piolibdeps/
-lib/README
-test/README
 
-# VS Code / VSCodium
-.vscode/
-.history/
+# =========================
+# VSCode / VSCodium
+# =========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# =========================
+# Atmel Studio (IGNORA SÓ O PESSOAL)
+# =========================
+*.cproj.user
+*.atsuo
+*.componentinfo.xml
+*.aps
+
+# =========================
+# Logs
+# =========================
 *.log
 
-# Arquivos de compilação e temporários
-*.hex
-*.elf
-*.o
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Temporários
+# =========================
+*~
+*.tmp
+*.bak

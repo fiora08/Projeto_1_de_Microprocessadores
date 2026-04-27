@@ -1,32 +1,34 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/iom2560.h>
 #include "timers.h"
 // volatile avisa ao compilador que esta variavel pode mudar a qualquer momento
-// ideal para interrupções
+// ideal para interrupï¿½ï¿½es
 volatile unsigned char flag_1ms = 0;
 volatile unsigned char flag_2s = 0;
 volatile unsigned int contador_serial = 0;
 volatile unsigned long contador_timeout = 0;
 volatile int h = 0, min = 0, seg = 0;
-// inicializaçaõ retirada de um laboratorio. 
+// inicializaï¿½aï¿½ retirada de um laboratorio. 
 // pre escala 64 
 void timer0_init(void){
 	TCCR0A = (1 << WGM01); // modo CTC
 	TCCR0B = (1 << CS01) | (1 << CS00); // Define a preescala em 64 
 	// calculo feito = (16MHz / (64 * 1000Hz)) - 1 = 249
 	OCR0A = 249;
-	//Habilita a interrupção por comparação no canal a  Timer 0
+	//Habilita a interrupï¿½ï¿½o por comparaï¿½ï¿½o no canal a  Timer 0
 	TIMSK0 |= (1 << OCIE0A);
 }
 
 void timer1_init(void){
 	TCCR1B |= (1 << WGM12); // Modo CTC
-	OCR1A = 249; // Interrupção a cada 1ms
+	OCR1A = 249; // Interrupï¿½ï¿½o a cada 1ms
 	TIMSK1 |= (1 << OCIE1A);
 	TCCR1B |= (1 << CS11) | (1 << CS10); // Prescaler 64
 }
 
-// interrupção do timer 0
+// interrupï¿½ï¿½o do timer 0,
+//  ta sendo usada na funÃ§Ã£o de atraso abaixo
 ISR(TIMER0_COMPA_vect){
 	flag_1ms = 1;
 }
@@ -51,4 +53,17 @@ ISR(TIMER1_COMPA_vect) {
 			}
 		}
 	}
+}
+
+
+//funÃ§Ã£o que usa o timer 0 para gerar uma quantidade configurÃ¡vel de atraso,
+//  usa o timer 0 entao Ã© bom usar ela no caso de nÃ£o estarmos usando ele
+//  e caso o sor pedir para nao usar biblioteca feita como o delay.h
+void atraso_ms(unsigned int milissegundos){
+	
+	for(unsigned int i =0; i<milissegundos; i++){
+		flag_1ms = 0;
+		while (!flag_1ms);
+	}
+
 }

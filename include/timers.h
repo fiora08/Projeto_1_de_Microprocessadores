@@ -5,7 +5,7 @@
 
 // variavel de flag 1 mili segundo do timer 0
 extern volatile unsigned char flag_1ms; 
-// função de inicialização do timer 0
+// funï¿½ï¿½o de inicializaï¿½ï¿½o do timer 0
 void timer0_init(void);
 
 
@@ -13,9 +13,10 @@ extern volatile unsigned char flag_2s;        // ativa quando atinge 2 segundos
 extern volatile unsigned int contador_serial;  //  milissegundos para o timeout
 extern volatile unsigned long contador_timeout; //  milissegundos para disparar a o led fora do ar
 
-// variaveis para o relógio do sistema
+// variaveis para o relï¿½gio do sistema
 extern volatile int h, min, seg;
 // inicializa o  timer 1;
 void timer1_init(void);
+void atraso_ms(unsigned int milissegundos);
 
 #endif
