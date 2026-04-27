@@ -7,8 +7,7 @@
 	#include "teclado.h"
 	#include "lcd.h"
 
-	// Cria a variavel global iniciando bloqueada
-	unsigned char estado_atual = BLOQUEADO;
+
 
 	unsigned char mascarar_senha(unsigned char *senha_out, unsigned char tamanho_senha) {
 		

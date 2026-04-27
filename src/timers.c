@@ -67,3 +67,13 @@ void atraso_ms(unsigned int milissegundos){
 	}
 
 }
+
+unsigned char tempo_n_bloqueante(unsigned int tempo) {
+    static unsigned int contador_tempo = 0;
+    contador_tempo++;
+    if (contador_tempo >= tempo) {
+        contador_tempo = 0;
+        return 1;
+    }
+    return 0;
+}
