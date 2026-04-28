@@ -1,9 +1,13 @@
 	#include "interface.h"
-	#include "teclado.h"
 	#include "lcd.h"
+    #include "maquina.h"
+    #include "teclado.h"
+    
 
-    unsigned char DESLIGADO;
+   /* unsigned char DESLIGADO;
     unsigned char LIGADO;
     // Cria a variavel global iniciando bloqueada
-	unsigned char estado_atual = BLOQUEADO;
+	
     unsigned char DESBLOQUEADO;
+    */
+    unsigned char estado_atual = BLOQUEADO;

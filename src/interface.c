@@ -28,6 +28,7 @@
 				senha_out[i] = senha[i];
 			}
 			pos = 0;
+			senha_out[tamanho_senha]='\0';
 			return 1;
 		}
 		

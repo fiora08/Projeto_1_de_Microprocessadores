@@ -2,12 +2,15 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include <string.h>
+#include "maquina.h"
 #include "timers.h"
 #include "serial.h"
 #include "lcd.h"
 #include "teclado.h"
 #include "energia.h"
 #include "interface.h"
+#include "senhas.h"
 
 int main(void) {
 	// Inicializa��o dos perif�ricos
@@ -19,6 +22,17 @@ int main(void) {
 	energia_inicializar();
 	
 	sei(); // Habilita interrup��es
+
+	//inicialização dos usuários 
+	usuario  novo_usuario[3];
+	strcpy(novo_usuario[0].nome ,"administrador");
+	strcpy(novo_usuario[0].senha , "0000");
+
+	strcpy(novo_usuario[1].nome ,"operador1");
+	strcpy(novo_usuario[1].senha , "1111");
+
+	strcpy(novo_usuario[2].nome ,"operador2");
+	strcpy(novo_usuario[2].senha , "2222");
 
 	char tecla;
 	char buffer_lcd[17]; // 16 caracteres + '\0'
@@ -82,13 +96,17 @@ int main(void) {
 			}
 			
 
-			/*// --- FALA TECLADO (LINHA 1) ---
+			// --- FALA TECLADO (LINHA 1) ---
+			//autenticação de senha
 			teclado_atualizar(); //
 			if(estado_atual == BLOQUEADO ){
-				unsigned char senha_login[4];
-				mascarar_senha(senha_login, 4);
+				unsigned char senha_login[5];
+				if(mascarar_senha(senha_login, 4)){
+					autenticar_usuario(novo_usuario, senha_login);
+				}
 			}
-			else if (tecla != 0 && estado_atual == LIBERADO) {
+
+			else if (tecla != 0 && estado_atual == DESBLOQUEADO) {
 				serial_transmitir(tecla);
 				tecla = teclado_obter_tecla();
 				// Limpa a parte de dados da linha 1 (coluna 9 em diante)
@@ -97,7 +115,8 @@ int main(void) {
 				lcd_posicionar(1, 9);
 				lcd_caractere(tecla); 
 			}
-			else{estado_atual = ERRO};*/
+			else{estado_atual = ERRO;
+			}
 			
 			
 			
