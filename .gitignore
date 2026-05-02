@@ -48,10 +48,12 @@
 # =========================
 # VSCode / VSCodium
 # =========================
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-!.vscode/launch.json
+.vscode/compile_commands.json
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch/
+.vscode/.suo
+.vscode/*.db
 
 # =========================
 # Atmel Studio (IGNORA SÓ O PESSOAL)

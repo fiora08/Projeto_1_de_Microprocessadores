@@ -1,15 +1,15 @@
 #include <avr/io.h>
 #include "teclado.h"
-#include "timers.h" // Necessário para a flag_1ms
+#include "timers.h" // Necessï¿½rio para a flag_1ms
 
 
 
-// Variáveis internas da biblioteca
+// Variï¿½veis internas da biblioteca
 static unsigned char tecla_estavel = 0;
 static unsigned char tecla_atual = 0;
 static unsigned char contador_estabilidade = 0;
 
-// Mapa de teclas conforme o teclado alfanumérico de 16 teclas 
+// Mapa de teclas conforme o teclado alfanumï¿½rico de 16 teclas 
 static const unsigned char mapa_teclas[4][4] = {
 	{'1', '2', '3', 'A'},
 	{'4', '5', '6', 'B'},
@@ -17,17 +17,17 @@ static const unsigned char mapa_teclas[4][4] = {
 	{'*', '0', '#', 'D'}
 };
 
-// Realiza a varredura física nos pinos do PORTA
+// Realiza a varredura fï¿½sica nos pinos do PORTA
 unsigned char teclado_ler_bruto(void) {
 	unsigned char linha, coluna_lida;
 	for (linha = 0; linha < 4; linha++) {
-		// O deslocamento 0x10 começa em PA4
+		// O deslocamento 0x10 comeï¿½a em PA4
 		PORTA = ~(0x10 << linha) | 0x0F;
-		// Pequena espera para estabilização elétrica dos pinos
-		for (volatile unsigned char i = 0; i < 10; i++) asm("nop"); // "asm(nop)" é um atraso de nanosegundos para dar um respiro a função.
-		// Lê o estado das colunas nos pinos PA0-PA3
+		// Pequena espera para estabilizaï¿½ï¿½o elï¿½trica dos pinos
+		for (volatile unsigned char i = 0; i < 10; i++) asm("nop"); // "asm(nop)" ï¿½ um atraso de nanosegundos para dar um respiro a funï¿½ï¿½o.
+		// Lï¿½ o estado das colunas nos pinos PA0-PA3
 		coluna_lida = PINA & 0x0F;
-		// Verifica se algum bit de coluna é 0 que é tecla pressionada
+		// Verifica se algum bit de coluna ï¿½ 0 que ï¿½ tecla pressionada
 		if (coluna_lida != 0x0F) {
 			// verifica bit a bit se a coluna foi pressionada
 			for (unsigned char col = 0; col < 4; col++) {
@@ -41,7 +41,7 @@ unsigned char teclado_ler_bruto(void) {
 }
 
 void teclado_inicializar(void) {
-	// PA4-PA7 como saídas e PA0-PA3 como entradas 
+	// PA4-PA7 como saï¿½das e PA0-PA3 como entradas 
 	DDRA = 0xF0;
 	// Ativa resistores de Pull-up nas entradas (PA0-PA3)
 	PORTA = 0xFF;
@@ -51,7 +51,7 @@ void teclado_atualizar(void) {
 	// Sincroniza com a base de tempo de 1ms do Timer 0
 	if (flag_1ms) {
 		unsigned char leitura = teclado_ler_bruto();
-		// aqui tem a verificação de ruido
+		// aqui tem a verificaï¿½ï¿½o de ruido
 		if (leitura != tecla_atual) {
 			contador_estabilidade = 0;
 			tecla_atual = leitura;
@@ -60,7 +60,7 @@ void teclado_atualizar(void) {
 				contador_estabilidade++;
 			}
 		}
-		// Se a tecla permanecer estável pelo tempo definido 20ms
+		// Se a tecla permanecer estï¿½vel pelo tempo definido 20ms
 		if (contador_estabilidade >= DEBOUNCE_MAXIMO) {
 			tecla_estavel = tecla_atual;
 			} else if (leitura == 0) {
@@ -71,7 +71,7 @@ void teclado_atualizar(void) {
 		}
 	}
 }
-// função para ler a tecla e retornar a tecla pressionada
+// funï¿½ï¿½o para ler a tecla e retornar a tecla pressionada
 unsigned char teclado_obter_tecla(void) {
 	static unsigned char ultima_tecla_enviada = 0;
 	unsigned char retorno = 0;
@@ -79,6 +79,13 @@ unsigned char teclado_obter_tecla(void) {
 	if (tecla_estavel != 0 && ultima_tecla_enviada == 0) {
 		retorno = tecla_estavel;
 	}
-	ultima_tecla_enviada = tecla_estavel; // trava o envio até o usuario parar de pressionar a tecla
+	ultima_tecla_enviada = tecla_estavel; // trava o envio atï¿½ o usuario parar de pressionar a tecla
 	return retorno;
+}
+
+
+void teclado_resetar_estado(void) {
+    tecla_estavel = 0;
+    tecla_atual = 0;
+    contador_estabilidade = 0;
 }

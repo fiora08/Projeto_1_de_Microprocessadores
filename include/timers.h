@@ -18,5 +18,6 @@ extern volatile int h, min, seg;
 // inicializa o  timer 1;
 void timer1_init(void);
 void atraso_ms(unsigned int milissegundos);
+unsigned char tempo_n_bloqueante(unsigned int tempo);
 
 #endif
