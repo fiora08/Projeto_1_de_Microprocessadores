@@ -2,13 +2,15 @@
 #include <avr/interrupt.h>
 #include <avr/iom2560.h>
 #include "timers.h"
+#include "lcd.h"
+#include "teclado.h"
 // volatile avisa ao compilador que esta variavel pode mudar a qualquer momento
 // ideal para interrup��es
 volatile unsigned char flag_1ms = 0;
 volatile unsigned char flag_2s = 0;
 volatile unsigned int contador_serial = 0;
 volatile unsigned long contador_timeout = 0;
-volatile int h = 0, min = 0, seg = 0;
+volatile int dia=0, mes= 0, ano=0,h = 0, min = 0, seg = 0;
 // inicializa�a� retirada de um laboratorio. 
 // pre escala 64 
 void timer0_init(void){
@@ -76,6 +78,116 @@ unsigned char tempo_n_bloqueante(unsigned int tempo) {
     
     if (contador_tempo >= tempo) {
         contador_tempo = 0;
+        return 1;
+    }
+    return 0;
+}
+
+
+void mostrar_hora(){// // converte inteiro para char somando com '0' (ASCII 48), separa dezena (/10) e unidade (%10)
+	lcd_caractere('0' + h/10);  // dezena
+	lcd_caractere('0' + h%10); // unidade
+	lcd_caractere(':');
+	lcd_caractere('0'+ min/10);
+	lcd_caractere('0'+ min%10); 
+	lcd_caractere(':');
+	lcd_caractere('0'+ seg/10);
+	lcd_caractere('0'+ seg%10); 
+
+}
+/*unsigned char alterar_hora(unsigned char tecla) {
+    static unsigned char pos = 0;
+    static unsigned char valor = 0;
+    //unsigned char tecla = teclado_obter_tecla();
+    
+    if (tecla != 0 && tecla != '#') {
+		lcd_posicionar(1, 0);
+        valor = valor * 10 + (tecla - '0');
+        pos++;
+        lcd_caractere(tecla);
+    }
+    if (tecla == '#' || pos == 2) {
+        if (pos>0 && valor <= 23) {
+			h = valor;
+			valor = 0;
+			return 1;
+		} else if (pos > 0) {
+			lcd_posicionar(1, 0);
+			lcd_escrever_string("Val.invalido!   ");
+			valor = 0;
+			pos = 0;
+			return 0;
+		}
+        valor = 0;
+        pos = 0;
+        return 1;
+    }
+    return 0;
+}*/
+
+/*unsigned char alterar_minuto(unsigned char tecla) {
+    static unsigned char pos = 0;
+    static unsigned char valor = 0;
+    //unsigned char tecla = teclado_obter_tecla();
+    
+    if (tecla != 0 && tecla != '#') {
+		lcd_posicionar(1, 0);
+        valor = valor * 10 + (tecla - '0');
+        pos++;
+        lcd_caractere(tecla);
+    }
+    if (tecla == '#' || pos == 2) {
+        if (pos>0 && valor <= 59) {
+			min = valor;
+			valor = 0;
+			return 1;
+		} else if (pos > 0) {
+        lcd_posicionar(1, 0);
+        lcd_escrever_string("Val.invalido!   ");
+		}
+        valor = 0;
+        pos = 0;
+        return 1;
+    }
+    return 0;
+}*/
+unsigned char alterar_hora(unsigned char tecla) {
+    static unsigned char pos = 0;
+    static unsigned char valor = 0;
+    
+    if (tecla != 0 && tecla != '#') {
+        lcd_posicionar(1, 0);
+        valor = valor * 10 + (tecla - '0');
+        pos++;
+        lcd_caractere(tecla);
+    }
+    if (tecla == '#' || pos == 2) {
+        if (pos > 0 && valor <= 23) {
+            h = valor;
+        }
+        valor = 0;
+        pos = 0;
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char alterar_minuto(unsigned char tecla) {
+    static unsigned char pos = 0;
+    static unsigned char valor = 0;
+    
+    if (tecla != 0 && tecla != '#') {
+        lcd_posicionar(1, 0);
+        valor = valor * 10 + (tecla - '0');
+        pos++;
+        lcd_caractere(tecla);
+    }
+    if (tecla == '#' || pos == 2) {
+        if (pos > 0 && valor <= 59) {
+            min = valor;
+        }
+        valor = 0;
+        pos = 0;
         return 1;
     }
     return 0;
