@@ -139,7 +139,7 @@ return 0;
 					
 					// Limpa apenas a linha 0 para novos dados da serial
 					lcd_posicionar(0, 0);
-					lcd_escrever_string("� � � � � � � � "); // 16 espa�os para limpar
+					lcd_escrever_string("TIAGO"); // 16 espa�os para limpar
 					lcd_posicionar(0, 0);
 					lcd_escrever_string(buffer_lcd);
 					index = 0;
@@ -147,7 +147,23 @@ return 0;
 					buffer_lcd[index++] = recebido;
 				}
 			}
+
+
+			// --- FALA TECLADO (LINHA 1) ---
+			teclado_atualizar(); //
+			tecla = teclado_obter_tecla();
 			
+			if (tecla != 0) {
+				serial_transmitir(tecla);
+				
+				// Limpa a parte de dados da linha 1 (coluna 9 em diante)
+				lcd_posicionar(1, 0);
+				lcd_escrever_string("Teclado:� � � � "); // Mant�m o r�tulo e limpa o resto
+				lcd_posicionar(1, 9);
+				lcd_caractere(tecla); //
+			}
+			
+
 			// --- FALA TECLADO (LINHA 1) ---
 			//autenticação de senha
 			//
