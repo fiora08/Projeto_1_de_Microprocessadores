@@ -148,8 +148,9 @@ while (1) {
 }
         if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
             tecla = teclado_obter_tecla();
+			//a partir daqui da para adicionar coisas novas para testar!!
             if (tecla != 0) {
-                lcd_caractere(tecla);
+                lcd_caractere(tecla);// aqui lcd esta mostrando a tecla que foi lida
             }
         }
     }
