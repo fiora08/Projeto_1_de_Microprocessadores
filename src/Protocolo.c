@@ -1,4 +1,5 @@
 #include "serial.h" 
+#include <string.h>
 
 
 
@@ -43,4 +44,28 @@ unsigned char enviar_logoff(unsigned char usuario_autenticado){
 
     return ACK;
     
+}
+
+unsigned char enviar_estorno( char cartao[6], char *valor_estorno){
+    unsigned char n = 0;
+    unsigned char tam_mensagem = 0;
+    char ACK;
+
+    n = 8 + strlen(valor_estorno);
+    tam_mensagem = 11 + strlen(valor_estorno);
+    char msg_estorno[tam_mensagem];
+
+
+    msg_estorno[0] = 'M';
+    msg_estorno[1] = 'E';
+    msg_estorno[2] = n ;
+    msg_estorno[3] = '2';
+    strcpy(&msg_estorno[4], cartao);
+    strcpy(&msg_estorno[10], valor_estorno);
+    //pelo que vi strcpy copia no ultimo local do array um \0 entao a parte debaixo ficava redundante
+    //msg_estorno[tam_mensagem-1] = '\0'; 
+    serial_enviar_triplo(msg_estorno, &ACK);
+
+    return ACK;
+
 }
