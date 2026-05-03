@@ -94,3 +94,14 @@ unsigned char enviar_venda( char bandeira, char cartao[6],char senha[6], char *v
     return ACK;
 
 }
+
+/*unsigned char receber_login(usuario *novo_usuario){
+    unsigned char nome_logado = 0;
+    char campo_dados[nome_logado];
+    for (int i= 0; i<nome_logado; i++) {
+        campo_dados[i] = serial_ler();
+    }
+    if (strcmp(novo_usuario[i].nome, campo_dados)) {
+    
+    }
+}*/
