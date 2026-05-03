@@ -11,6 +11,7 @@
 #include "energia.h"
 #include "interface.h"
 #include "senhas.h"
+#include "vendas.h"
 
 int main(void) {
 	// Inicialização dos periféricos
@@ -74,6 +75,7 @@ while (1) {
             mascara_autentica_senha(novo_usuario, 4, &usuario_autenticado);
         }
         if (estado_atual == DESBLOQUEADO) {
+			vendas(1); //Acho que teria que chamar aqui 
             tecla = teclado_obter_tecla();
             if (tecla != 0) {
                 lcd_caractere(tecla);
@@ -96,7 +98,7 @@ return 0;
 
 	
 		energia_gerenciar();	
-		///*if (flag_1ms) {
+		//if (flag_1ms) {
 		//energia_gerenciar();
 		//	teclado_atualizar(); 
 		//	 flag_1ms = 0;	
@@ -167,7 +169,6 @@ return 0;
 			// --- FALA TECLADO (LINHA 1) ---
 			//autenticação de senha
 			//
-			/*
 			if(estado_atual == BLOQUEADO ){
 				unsigned char senha_login[4]= "0738";
 				unsigned char usuario_autenticado;
