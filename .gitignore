@@ -80,3 +80,5 @@ Thumbs.db
 *~
 *.tmp
 *.bak
+
+compile_commands.json

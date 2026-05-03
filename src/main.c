@@ -143,20 +143,21 @@ while (1) {
 				sistema_ja_ligado =3;
 			}
         }
-<<<<<<< HEAD
-        if (estado_atual == DESBLOQUEADO) {
-			vendas(1); //Acho que teria que chamar aqui 
-=======
+
+
 		if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 3 && tempo_n_bloqueante(1500)) {
    			 lcd_limpar();
    			 sistema_ja_ligado = 4;
 }
         if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
->>>>>>> c8934cb2809cde9149d5e953a1ad968eb5914611
+			
             tecla = teclado_obter_tecla();
+			
 			//a partir daqui da para adicionar coisas novas para testar!!
             if (tecla != 0) {
+				//vendas(1);
                 lcd_caractere(tecla);// aqui lcd esta mostrando a tecla que foi lida
+				
             }
         }
     }
