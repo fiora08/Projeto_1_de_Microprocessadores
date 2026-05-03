@@ -19,5 +19,9 @@ extern volatile int h, min, seg;
 void timer1_init(void);
 void atraso_ms(unsigned int milissegundos);
 unsigned char tempo_n_bloqueante(unsigned int tempo);
+void mostrar_hora();
+unsigned char alterar_hora(unsigned char tecla);
+unsigned char alterar_minuto(unsigned char tecla);
+//unsigned char alterar_minuto(void);
 
 #endif

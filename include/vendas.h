@@ -15,13 +15,14 @@
 
 
 typedef struct venda {
-    int tipo_venda;
-    char valor_venda[6];
-    char num_parcelas;
-    int opcao_venda;
-    char bandeira;
-    char num_cartao[7];
-    char senha_cartao[7];
+    unsigned int tipo_venda;
+    unsigned char valor_venda[6];
+    unsigned char num_parcelas;
+    unsigned int opcao_venda;
+    unsigned char bandeira;
+    unsigned char num_cartao[7];
+    unsigned char senha_cartao[7];
+    unsigned int codigo;
 } venda;
 
 extern venda n_vendas[5];

@@ -1,5 +1,7 @@
 #include <avr/io.h>
 #include "energia.h"
+#include "interface.h"
+#include "maquina.h"
 #include "teclado.h"
 #include "timers.h"
 #include "lcd.h"
@@ -7,7 +9,7 @@
 static unsigned int contador_tempo = 0;
 // na biblioteca foi definido que desligado � 0 e ligado � 1, facilitar a logica em vez de ficar usando numeros.
 static unsigned char estado_sistema = DESLIGADO;
-
+unsigned char sistema_ja_ligado = 0;
 // define o estado inicial do arduino mega
 void energia_inicializar(void) {
 	estado_sistema = DESLIGADO;
@@ -37,6 +39,8 @@ void energia_gerenciar(void) {
 					PORTB |= (1 << PB2); // liga o backlight
 					lcd_inicializar();  // fun��oes da biblioteca lcd.h
 					lcd_limpar();  
+					sistema_ja_ligado =0;
+					estado_atual = BLOQUEADO;
 				}
 		} else {
 				contador_tempo = 0; 

@@ -11,6 +11,7 @@ static unsigned char ind_vds = 0;
 static unsigned char ind_val = 0;
 static unsigned char ind_num = 0;
 static unsigned char ind_sen = 0;
+static unsigned char inc_cod = 0;
 static unsigned char qual_venda;
 static unsigned char estado_venda = TIPO;
 venda n_vendas[5];
@@ -37,6 +38,7 @@ unsigned char vendas(unsigned char inicio){
 			lcd_caractere(tecla);
 		}else if(tecla == 'D' && estado_venda == TIPO)
 			{
+				if(qual_venda == VENDA_VISTA) n_vendas[ind_vds].codigo = inc_cod++;
 				estado_venda = VALOR;
 				lcd_limpar();
 				//Ler o valor da compra
@@ -48,8 +50,8 @@ unsigned char vendas(unsigned char inicio){
 		{
 			case VENDA_VISTA:
 				// Vai salvar o tipo da venda em um dos indices do struct vendas
-				n_vendas[ind_vds].tipo_venda = VENDA_VISTA; 
-
+				n_vendas[ind_vds].tipo_venda = VENDA_VISTA;
+				
 				if(tecla != 0 && estado_venda == VALOR)
 				{
 					if(ind_val < 5 && tecla != 'D')
