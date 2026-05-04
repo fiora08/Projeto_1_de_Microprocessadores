@@ -4,6 +4,7 @@
 #define IDLE  0
 #define LENDO_TIPO 1
 #define LENDO_N 2
-#define LENDO_DADOS 3
+#define LENDO_PAYLOAD 3
+#define LENDO_DADOS_FIXOS 4
 
 #endif
