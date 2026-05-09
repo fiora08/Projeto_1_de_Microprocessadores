@@ -1,6 +1,6 @@
 {
     "clangd.arguments": [
-        "--compile-commands-dir=${workspaceFolder}/.vscode",
+        "--compile-commands-dir=${workspaceFolder}",
         "--query-driver=**/*gcc*,**/*g++*"
     ],
     "C_Cpp.intelliSenseEngine": "disabled",

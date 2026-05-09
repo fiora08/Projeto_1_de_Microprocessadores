@@ -65,7 +65,7 @@ unsigned char enviar_estorno( char bandeira, char cartao[6], char *valor_estorno
     //pelo que vi strcpy copia no ultimo local do array um \0 entao a parte debaixo ficava redundante
     //msg_estorno[tam_mensagem-1] = '\0'; 
     serial_enviar_triplo(msg_estorno, &ACK);
-
+    
     return ACK;
 
 }

@@ -112,6 +112,7 @@ unsigned char maquina_protocolo(){
                     return 1; // avisa que a mensagem ta montada
 
                 }
+                //mensagem[2]= '0'+n;//seria um jeito de mostrar n na tela mas nao ha necessidade
                 break;
 
             case LENDO_DADOS_FIXOS:
@@ -161,4 +162,8 @@ unsigned char maquina_protocolo(){
     
 return 0;
 
+}
+
+char* protocolo_get_mensagem(void){
+    return mensagem;
 }

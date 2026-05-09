@@ -12,6 +12,8 @@
 #include "interface.h"
 #include "senhas.h"
 #include "vendas.h"
+#include "maquina_protocolo.h"
+#include "protocolo.h"
 
 int main(void) {
 	// Inicialização dos periféricos
@@ -42,6 +44,41 @@ int main(void) {
 	unsigned char usuario_autenticado;
 	unsigned char modo_edicao = 0;
 	static int ultimo_seg = -1;
+
+
+usuario_autenticado = 0;
+	
+	//enviar_login(usuario_autenticado);
+	//enviar_logoff(usuario_autenticado);
+
+while(1){
+	energia_gerenciar();
+	if (maquina_protocolo()==1) {
+		serial_escrever(protocolo_get_mensagem());
+		lcd_escrever_string(protocolo_get_mensagem());
+		
+
+	
+	}
+	flag_1ms = 0;
+}
+return 0;
+}
+
+/*
+while(1){
+    if(serial_disponivel()){
+        char c = serial_ler();
+        serial_transmitir(c); // ecoa de volta o que recebeu
+    }
+}
+return 0;
+}*/
+
+
+
+
+
 
 
 // MAIN BASICA E FUNCIONAL ATÉ O MOMENTO
@@ -167,7 +204,7 @@ if (modo_edicao == 2 && tecla != '#') { // só processa minuto se não for '#'
 */
 
 
-
+/*
 while (1) {
     energia_gerenciar();
     if (energia_sistema_ativo() == LIGADO) {
@@ -204,6 +241,10 @@ while (1) {
 
 		if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 3 && tempo_n_bloqueante(1500)) {
    			 lcd_limpar();
+
+			 serial_transmitir('t');
+			 serial_transmitir('r');
+			 enviar_login(usuario_autenticado);
    			 sistema_ja_ligado = 4;
 }
 // até esse bloco aqui ele só liga mostra a telinha inicial e autentica usuário
@@ -211,7 +252,11 @@ while (1) {
         if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
 			
             tecla = teclado_obter_tecla();
-			
+			if(maquina_protocolo()== 1){
+				char *msg = protocolo_get_mensagem();
+				lcd_limpar();
+				lcd_escrever_string(msg);
+			}
 			//a partir daqui da para adicionar coisas novas para testar!!
             if (tecla != 0) {
                 lcd_caractere(tecla);// aqui lcd esta mostrando a tecla que foi lida
@@ -225,7 +270,7 @@ return 0;
 }
 
 
-
+*/
 
 
 
