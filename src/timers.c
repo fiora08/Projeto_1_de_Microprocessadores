@@ -18,18 +18,18 @@ void timer0_init(void){
 	TCCR0B = (1 << CS01) | (1 << CS00); // Define a preescala em 64 
 	// calculo feito = (16MHz / (64 * 1000Hz)) - 1 = 249
 	OCR0A = 249;
-	//Habilita a interrup��o por compara��o no canal a  Timer 0
+	//Habilita a interrupção por compara��o no canal a  Timer 0
 	TIMSK0 |= (1 << OCIE0A);
 }
 
 void timer1_init(void){
 	TCCR1B |= (1 << WGM12); // Modo CTC
-	OCR1A = 249; // Interrup��o a cada 1ms
+	OCR1A = 249; // Interrupção a cada 1ms
 	TIMSK1 |= (1 << OCIE1A);
 	TCCR1B |= (1 << CS11) | (1 << CS10); // Prescaler 64
 }
 
-// interrup��o do timer 0,
+// interrupção do timer 0,
 //  ta sendo usada na função de atraso abaixo
 ISR(TIMER0_COMPA_vect){
 	flag_1ms = 1;
@@ -94,6 +94,57 @@ void mostrar_hora(){// // converte inteiro para char somando com '0' (ASCII 48),
 	lcd_caractere('0'+ seg/10);
 	lcd_caractere('0'+ seg%10); 
 
+}
+
+void mostrar_data(){
+    lcd_caractere('0'+ mes/10);
+    lcd_caractere('0'+ mes%10);
+    lcd_caractere(':');
+    lcd_caractere('0'+ dia/10);
+    lcd_caractere('0'+dia%10);
+}
+
+
+unsigned char alterar_mes(unsigned char tecla){
+    static unsigned char pos = 0;
+    static unsigned char valor = 0;
+    
+    if (tecla != 0 && tecla != '#') {
+        lcd_posicionar(1, 0);
+        valor = valor * 10 + (tecla - '0');
+        pos++;
+        lcd_caractere(tecla);
+    }
+    if (tecla == '#' || pos == 2) {
+        if (pos > 0 && valor <= 12) {
+            mes = valor;
+        }
+        valor = 0;
+        pos = 0;
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char alterar_dia(unsigned char tecla){
+    static unsigned char pos = 0;
+    static unsigned char valor = 0;
+    
+    if (tecla != 0 && tecla != '#') {
+        lcd_posicionar(1, 0);
+        valor = valor * 10 + (tecla - '0');
+        pos++;
+        lcd_caractere(tecla);
+    }
+    if (tecla == '#' || pos == 2) {
+        if (pos > 0 && valor <= 31) {
+            dia = valor;
+        }
+        valor = 0;
+        pos = 0;
+        return 1;
+    }
+    return 0;
 }
 /*unsigned char alterar_hora(unsigned char tecla) {
     static unsigned char pos = 0;

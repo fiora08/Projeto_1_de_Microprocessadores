@@ -30,6 +30,7 @@ int main(void) {
 
 	//inicialização dos usuários 
 	usuario  novo_usuario[3];
+	cartao_local1 cartao_local[5];
 
 	strcpy(novo_usuario[0].nome ,"ZE ROBERTO");
 	strcpy(novo_usuario[0].senha , "1254");
@@ -39,6 +40,9 @@ int main(void) {
 
 	strcpy(novo_usuario[2].nome ,"ADEMASTOR");
 	strcpy(novo_usuario[2].senha , "0738");
+
+	strcpy(cartao_local[0].numero_cartao, "123456");
+	cartao_local[0].saldo = 800;
 
 	unsigned char tecla=0;
 	char buffer_lcd[17]; // 16 caracteres + '\0'

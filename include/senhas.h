@@ -6,6 +6,7 @@ typedef struct usuario{
 typedef struct cartao_local{
     char numero_cartao[10];
     char senha_cartao[8];
+    int saldo;
 }cartao_local1;
 
 unsigned char autenticar_usuario(usuario *novo_usuario , unsigned char leitura_teclado[], unsigned char *indice_out );
