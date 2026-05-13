@@ -1,8 +1,15 @@
 #include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
 #include <string.h>
-#include "teclado.h"
 #include "maquina.h"
+#include "timers.h"
+#include "serial.h"
 #include "lcd.h"
+#include "teclado.h"
+#include "energia.h"
+#include "interface.h"
+#include "senhas.h"
 #include "vendas.h"
 
 //  Variáveis internas
@@ -12,6 +19,7 @@ static unsigned char ind_val = 0;
 static unsigned char ind_num = 0;
 static unsigned char ind_sen = 0;
 static unsigned char inc_cod = 0;
+static unsigned char cont_D = 0;
 static unsigned char qual_venda;
 static unsigned char estado_venda = TIPO;
 venda n_vendas[5];
@@ -25,16 +33,17 @@ unsigned char vendas(unsigned char inicio){
 		if(inicio == 1)
 		{
 			lcd_posicionar(0, 0);
-			lcd_escrever_string("A.V.-1");
+			lcd_escrever_string("Vist(1)");
 			lcd_posicionar(0, 8);
-			lcd_escrever_string("PRAZO-2");
+			lcd_escrever_string("Praz(2)");
 			lcd_posicionar(1, 0);
-			lcd_escrever_string("Selecione:");
+			lcd_escrever_string(">>");
 		}
 
 		if(tecla != 0 && ((tecla - '0') <= 2) && estado_venda == TIPO)
 		{
 			qual_venda = tecla - '0';
+			lcd_posicionar(1, 2);
 			lcd_caractere(tecla);
 		}else if(tecla == 'D' && estado_venda == TIPO)
 			{
@@ -43,7 +52,7 @@ unsigned char vendas(unsigned char inicio){
 				lcd_limpar();
 				//Ler o valor da compra
 				lcd_posicionar(0, 0);
-				lcd_escrever_string("VALOR:");	
+				lcd_escrever_string("Valor:");
 			}
 
 		switch(qual_venda)
@@ -53,14 +62,15 @@ unsigned char vendas(unsigned char inicio){
 				n_vendas[ind_vds].tipo_venda = VENDA_VISTA;
 				
 				if(tecla != 0 && estado_venda == VALOR)
-				{
+				{				
 					if(ind_val < 5 && tecla != 'D')
-					{
+					{	
 						n_vendas[ind_vds].valor_venda[ind_val] = tecla;
 						//Imprimir valor na tela
-						lcd_caractere(n_vendas[ind_vds].valor_venda[ind_val]);
+						lcd_posicionar(0, (6+ind_val));
+						lcd_caractere(tecla);
 						ind_val++;
-					} else if (tecla == 'D')
+					} else if (tecla == 'D' && n_vendas[ind_vds].valor_venda[0] !=0) //n_vendas[ind_vds].valor_venda[0] !=0
 						{
 							// Caso o CONFIRMA - tecla D - for apertado sai do estado VALOR e finaliza o vetor de venda
 							estado_venda = OPCAO; 
@@ -69,9 +79,11 @@ unsigned char vendas(unsigned char inicio){
 							lcd_limpar();
 							//Ler a opção de compra
 							lcd_posicionar(0, 0);
-							lcd_escrever_string("OP: DB-1");
-							lcd_posicionar(0, 10);
-							lcd_escrever_string("CRED-2");
+							lcd_escrever_string("Deb(1)");
+							lcd_posicionar(0, 7);
+							lcd_escrever_string("Cred(2)");
+							lcd_posicionar(1, 0);
+							lcd_escrever_string(">>");
 						}
 				}
 				
@@ -88,7 +100,7 @@ unsigned char vendas(unsigned char inicio){
 						//Imprimir valor na tela
 						lcd_caractere(n_vendas[ind_vds].valor_venda[ind_val]);
 						ind_val++;
-					} else if (tecla == 'D')
+					} else if (tecla == 'D' && n_vendas[ind_vds].valor_venda[0] != 0)
 						{
 							// Caso o CONFIRMA - tecla D - for apertado sai do estado VALOR e finaliza o vetor de venda
 							estado_venda = NUM_PARCELAS; 
@@ -97,54 +109,68 @@ unsigned char vendas(unsigned char inicio){
 							lcd_limpar();
 							//Ler a opção de compra
 							lcd_posicionar(0, 0);
-							lcd_escrever_string("PARCELAS:");
+							lcd_escrever_string("Parcelas:");
 						}
 				}
 				
 				if(estado_venda == NUM_PARCELAS && tecla != 0 && ((tecla - '0') <= 3))
 				{	
+					lcd_posicionar(0, 9);
+					lcd_caractere(tecla);
 					n_vendas[ind_vds].num_parcelas = tecla;
-				}else if(estado_venda == NUM_PARCELAS && tecla == 'D')
+					cont_D = 3;
+				}else if(estado_venda == NUM_PARCELAS && tecla == 'D' && cont_D == 3)
 					{
 						estado_venda = OPCAO;
 						lcd_limpar();
 						//Ler a opção de compra
 						lcd_posicionar(0, 0);
-						lcd_escrever_string("OP: DB-1");
-						lcd_posicionar(0, 10);
-						lcd_escrever_string("CRED-2");
+						lcd_escrever_string("Deb(1)");
+						lcd_posicionar(0, 7);
+						lcd_escrever_string("Cred(2)");
+						lcd_posicionar(1, 0);
+						lcd_escrever_string(">>");
 					}
 
 				break;
 			default:
 				break;
 		}
-
+			//ESTADO OPÇÃO DE VENDA (DEBITO OU CREDITO)
 				if(estado_venda == OPCAO && ((tecla-'0') == 1))
 				{	
+					lcd_posicionar(1, 2);
+					lcd_caractere(tecla);
 					n_vendas[ind_vds].opcao_venda = DEBITO;
+					cont_D = 1;
 				}else if(estado_venda == OPCAO && ((tecla-'0') == 2))
 					{	
+						lcd_posicionar(1, 2);
+						lcd_caractere(tecla);
 						n_vendas[ind_vds].opcao_venda = CREDITO;
-					}else if(estado_venda == OPCAO && tecla == 'D')
+						cont_D = 1;
+					}else if(estado_venda == OPCAO && tecla == 'D' && cont_D == 1)
 						{
 							estado_venda = BANDEIRA;
 							lcd_limpar();
 							//Ler a opção de compra
 							lcd_posicionar(0, 0);
-							lcd_escrever_string("BANDEIRA:");
+							lcd_escrever_string("Bandeira:");
 						}
 
 				if(estado_venda == BANDEIRA && tecla != 'D' && tecla != 0)
 				{	
+					lcd_posicionar(0, 9);
+					lcd_caractere(tecla);
 					n_vendas[ind_vds].bandeira = tecla;
-				}else if(estado_venda == BANDEIRA && tecla == 'D')
+					cont_D = 2;
+				}else if(estado_venda == BANDEIRA && tecla == 'D' && cont_D == 2)
 					{
 						estado_venda = NUM_CARTAO;
 						lcd_limpar();
 						//Ler a opção de compra
 						lcd_posicionar(0, 0);
-						lcd_escrever_string("N. CARTAO:");
+						lcd_escrever_string("N.CARTAO:");
 					}
 
 				if(estado_venda == NUM_CARTAO && tecla != 0)
@@ -162,7 +188,7 @@ unsigned char vendas(unsigned char inicio){
 							lcd_limpar();
 							//Ler a opção de compra
 							lcd_posicionar(0, 0);
-							lcd_escrever_string("SENHA:");	
+							lcd_escrever_string("Senha:");	
 						}
 				}
 
@@ -182,6 +208,11 @@ unsigned char vendas(unsigned char inicio){
 							qual_venda = 0;	
 							ind_vds++;
 							if(ind_vds > 4)	ind_vds = 0;
+							lcd_limpar();
+							lcd_posicionar(0, 4);
+							lcd_escrever_string("Compra");
+							lcd_posicionar(1, 2);
+							lcd_escrever_string("Finalizada!");
 							return 1;
 						}
 				}
