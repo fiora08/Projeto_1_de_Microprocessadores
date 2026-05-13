@@ -1,6 +1,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/iom2560.h>
 #include <util/delay.h>
 #include <string.h>
 #include "maquina.h"
@@ -14,6 +15,7 @@
 #include "vendas.h"
 #include "maquina_protocolo.h"
 #include "protocolo.h"
+
 
 int main(void) {
 	// Inicialização dos periféricos
@@ -44,41 +46,6 @@ int main(void) {
 	unsigned char usuario_autenticado;
 	unsigned char modo_edicao = 0;
 	static int ultimo_seg = -1;
-
-
-usuario_autenticado = 0;
-	
-	//enviar_login(usuario_autenticado);
-	//enviar_logoff(usuario_autenticado);
-
-while(1){
-	energia_gerenciar();
-	if (maquina_protocolo()==1) {
-		serial_escrever(protocolo_get_mensagem());
-		lcd_escrever_string(protocolo_get_mensagem());
-		
-
-	
-	}
-	flag_1ms = 0;
-}
-return 0;
-}
-
-/*
-while(1){
-    if(serial_disponivel()){
-        char c = serial_ler();
-        serial_transmitir(c); // ecoa de volta o que recebeu
-    }
-}
-return 0;
-}*/
-
-
-
-
-
 
 
 // MAIN BASICA E FUNCIONAL ATÉ O MOMENTO
@@ -161,6 +128,38 @@ return 0;
 }
 */
 
+/* 
+usuario_autenticado = 0;
+	
+	//enviar_login(usuario_autenticado);
+	//enviar_logoff(usuario_autenticado);
+
+LOOP P/ TESTAR A MAQUINA DE ESTADOS DE MONTAGEM DE FRAMES RECEBIDOS
+while(1){
+	energia_gerenciar();
+	if (maquina_protocolo()==1) {
+		serial_escrever(protocolo_get_mensagem());
+		lcd_escrever_string(protocolo_get_mensagem());
+		
+
+	
+	}
+	flag_1ms = 0;
+}
+return 0;
+}
+*/
+
+/*
+while(1){
+    if(serial_disponivel()){
+        char c = serial_ler();
+        serial_transmitir(c); // ecoa de volta o que recebeu
+    }
+}
+return 0;
+}*/
+
 
 //LOOP PARA TESTAR FUNÇÃO DE SETAR HORA
 //AO LIGAR ELA COMEÇA A CONTAR AS HORAS DE 00:00:00
@@ -204,7 +203,7 @@ if (modo_edicao == 2 && tecla != '#') { // só processa minuto se não for '#'
 */
 
 
-/*
+
 while (1) {
     energia_gerenciar();
     if (energia_sistema_ativo() == LIGADO) {
@@ -241,9 +240,6 @@ while (1) {
 
 		if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 3 && tempo_n_bloqueante(1500)) {
    			 lcd_limpar();
-
-			 serial_transmitir('t');
-			 serial_transmitir('r');
 			 enviar_login(usuario_autenticado);
    			 sistema_ja_ligado = 4;
 }
@@ -262,6 +258,13 @@ while (1) {
                 lcd_caractere(tecla);// aqui lcd esta mostrando a tecla que foi lida
 				//vendas(1);
             }
+
+			if (fora_do_ar_flag ==1) {
+				PORTB |= (1<<LED_fora_do_ar);
+			
+			}else {
+				PORTB &= ~(1<< LED_fora_do_ar);
+			}
         }
     }
 	flag_1ms=0;
@@ -270,7 +273,7 @@ return 0;
 }
 
 
-*/
+
 
 
 

@@ -1,8 +1,12 @@
 #ifndef ENERGIA_H
 #define ENERGIA_H
 
+#define LED_fora_do_ar PB3
+#define LED_pagamento_pendente PB7
+
 #include "maquina.h"
 // Estados poss�veis do sistema MicPay
+
 
 extern unsigned char sistema_ja_ligado;
 

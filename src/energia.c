@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <avr/iom2560.h>
 #include "energia.h"
 #include "interface.h"
 #include "maquina.h"
@@ -14,6 +15,7 @@ unsigned char sistema_ja_ligado = 0;
 void energia_inicializar(void) {
 	estado_sistema = DESLIGADO;
 	contador_tempo = 0;
+	DDRB |= (1<<LED_fora_do_ar) | (1<<LED_pagamento_pendente); //ativa os leds para sem resp e pagamento
 }
 // fun��o que retorna se o sistema esta ativo ou n�o 1 � ligado 0 � desligado
 unsigned char energia_sistema_ativo(void) {

@@ -46,29 +46,6 @@ unsigned char enviar_logoff(unsigned char usuario_autenticado){
     
 }
 
-unsigned char enviar_estorno( char bandeira, char cartao[6], char *valor_estorno){
-    unsigned char n = 0;
-    unsigned char tam_mensagem = 0;
-    char ACK;
-
-    n = 8 + strlen(valor_estorno);
-    tam_mensagem = 11 + strlen(valor_estorno);
-    char msg_estorno[tam_mensagem];
-
-
-    msg_estorno[0] = 'M';
-    msg_estorno[1] = 'E';
-    msg_estorno[2] = n ;
-    msg_estorno[3] = bandeira;
-    strcpy(&msg_estorno[4], cartao);
-    strcpy(&msg_estorno[10], valor_estorno);
-    //pelo que vi strcpy copia no ultimo local do array um \0 entao a parte debaixo ficava redundante
-    //msg_estorno[tam_mensagem-1] = '\0'; 
-    serial_enviar_triplo(msg_estorno, &ACK);
-    
-    return ACK;
-
-}
 
 unsigned char enviar_venda( char bandeira, char cartao[6],char senha[6], char *valor_venda){
     unsigned char n = 0;
@@ -95,6 +72,78 @@ unsigned char enviar_venda( char bandeira, char cartao[6],char senha[6], char *v
 
 }
 
+unsigned char enviar_venda_parcelada( char bandeira, char cartao[6],char senha[6], char parcelas, char *valor_venda){
+    unsigned char n = 0;
+    unsigned char tam_mensagem = 0;
+    char ACK;
+
+    n = 15 + strlen(valor_venda);
+    tam_mensagem = 18 + strlen(valor_venda);
+    char msg_venda_parcelada[tam_mensagem];
+
+    msg_venda_parcelada[0] = 'M';
+    msg_venda_parcelada[1] = 'P';
+    msg_venda_parcelada[2] = n;
+    msg_venda_parcelada[3] = bandeira;
+    strcpy(&msg_venda_parcelada[4], cartao);
+    strcpy(&msg_venda_parcelada[10], senha);
+    msg_venda_parcelada[16] = parcelas;
+    strcpy(&msg_venda_parcelada[17], valor_venda);
+    // pelo que vi strcpy copia no ultimo local do array um \0 entao a parte
+    // debaixo ficava redundante msg_venda[tam_mensagem-1] = '\0';
+    serial_enviar_triplo(msg_venda_parcelada, &ACK);
+
+    return ACK;
+}
+
+
+unsigned char enviar_estorno( char bandeira, char cartao[6], char *valor_estorno){
+    unsigned char n = 0;
+    unsigned char tam_mensagem = 0;
+    char ACK;
+
+    n = 8 + strlen(valor_estorno);
+    tam_mensagem = 11 + strlen(valor_estorno);
+    char msg_estorno[tam_mensagem];
+
+
+    msg_estorno[0] = 'M';
+    msg_estorno[1] = 'E';
+    msg_estorno[2] = n ;
+    msg_estorno[3] = bandeira;
+    strcpy(&msg_estorno[4], cartao);
+    strcpy(&msg_estorno[10], valor_estorno);
+    //pelo que vi strcpy copia no ultimo local do array um \0 entao a parte debaixo ficava redundante
+    //msg_estorno[tam_mensagem-1] = '\0'; 
+    serial_enviar_triplo(msg_estorno, &ACK);
+    
+    return ACK;
+
+}
+
+unsigned char enviar_agendamento( char bandeira, char cartao[6], char *valor_agendamento){
+    unsigned char n = 0;
+    unsigned char tam_mensagem = 0;
+    char ACK;
+
+    n = 8 + strlen(valor_agendamento);
+    tam_mensagem = 11 + strlen(valor_agendamento);
+    char msg_agendamento[tam_mensagem];
+
+
+    msg_agendamento[0] = 'M';
+    msg_agendamento[1] = 'A';
+    msg_agendamento[2] = n ;
+    msg_agendamento[3] = bandeira;
+    strcpy(&msg_agendamento[4], cartao);
+    strcpy(&msg_agendamento[10], valor_agendamento);
+    //pelo que vi strcpy copia no ultimo local do array um \0 entao a parte debaixo ficava redundante
+    //msg_agendamento[tam_mensagem-1] = '\0'; 
+    serial_enviar_triplo(msg_agendamento, &ACK);
+    
+    return ACK;
+
+}
 /*unsigned char receber_login(usuario *novo_usuario){
     unsigned char nome_logado = 0;
     char campo_dados[nome_logado];
