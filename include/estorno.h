@@ -5,12 +5,14 @@
  *  Author: User
  */ 
 
+#ifndef ESTORNO_H
+#define ESTORNO_H
 
-#ifndef ESTORNO_H_
-#define ESTORNO_H_
+#include "senhas.h" // Obrigatório para o compilador reconhecer o que é a struct 'usuario'
 
+// Inicia a máquina de estados do processo de estorno.
+// Recebe o vetor de usuários para validar a senha do operador.
+// Retorna 1 se o estorno foi aprovado com sucesso, ou 0 se foi cancelado/reprovado.
+unsigned char estorno_executar(usuario *lista_usuarios);
 
-
-
-
-#endif /* ESTORNO_H_ */
+#endif
