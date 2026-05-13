@@ -1,3 +1,6 @@
+#ifndef SENHAS_H   
+#define SENHAS_H
+
 typedef struct usuario{
     char nome[15];
     char senha[5];
@@ -17,3 +20,4 @@ unsigned char mascara_autentica_senha( usuario *novo_usuario, unsigned char tama
                                       unsigned char tamanho_senha,
                                       unsigned char *indice_out,
                                       unsigned char *tecla) ;*/
+#endif
