@@ -12,8 +12,6 @@
 #include "energia.h"
 #include "interface.h"
 #include "senhas.h"
-#include "vendas.h"
-#include "maquina_protocolo.h"
 #include "protocolo.h"
 
 void maquina_login(usuario *novo_usuario, unsigned char *usuario_autenticado) {

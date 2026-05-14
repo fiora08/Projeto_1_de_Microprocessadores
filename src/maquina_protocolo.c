@@ -1,14 +1,11 @@
 #include "maquina_protocolo.h"
-#include "maquina.h"
 #include "serial.h"
-#include <math.h>
 #include <string.h>
 
 static unsigned char estado_protocolo = IDLE;
 static unsigned char tipo_mensagem = 0;
 static unsigned char n;
 static unsigned char contador_payload = 0;
-static unsigned char resposta_venda[3];
 static char mensagem[16];
 unsigned char maquina_protocolo(){
 
