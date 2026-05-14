@@ -60,9 +60,14 @@ unsigned char maquina_protocolo(){
                         //feita venda
                         estado_protocolo = LENDO_DADOS_FIXOS;
                         break;
+
+                    case 'E':
+                        strcpy(mensagem, "SE");
+                        //feito estorno
+                        estado_protocolo = LENDO_DADOS_FIXOS;
+                        break;
                     
                     case 'P':
-                        
                         //feita parcelada
                         strcpy(mensagem, "SP");
                         estado_protocolo = LENDO_DADOS_FIXOS;
@@ -131,6 +136,13 @@ unsigned char maquina_protocolo(){
                         estado_protocolo =IDLE;
                         return 1;
                         //cartao com falha
+                        break;
+                    case 'P':
+                        //
+                        mensagem[2] = 'P';
+                        mensagem[3] = '\0';
+                        estado_protocolo =IDLE;
+                        return 1;
                         break;
                     case 'S': 
                         //senha com falha

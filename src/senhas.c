@@ -57,7 +57,7 @@ unsigned char mascara_autentica_senha( usuario *novo_usuario, unsigned char tama
         } 
     }
         pos = 0;
-		return estado_atual = BLOQUEADO;
+		return estado_atual = ERRO;
 		}
 		
 		return estado_atual;

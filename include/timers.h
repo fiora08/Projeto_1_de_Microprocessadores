@@ -5,6 +5,7 @@
 
 // variavel de flag 1 mili segundo do timer 0
 extern volatile unsigned char flag_1ms; 
+extern unsigned int contadores_tempo[2];
 // função de inicialização do timer 0
 void timer0_init(void);
 
@@ -19,6 +20,7 @@ extern volatile int dia, mes, h, min, seg;
 void timer1_init(void);
 void atraso_ms(unsigned int milissegundos);
 unsigned char tempo_n_bloqueante(unsigned int tempo);
+unsigned char tempo_n_bloqueante_v2(unsigned int tempo, unsigned char id);
 void mostrar_hora();
 void mostrar_data();
 unsigned char alterar_hora(unsigned char tecla);

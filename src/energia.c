@@ -57,6 +57,10 @@ void energia_gerenciar(void) {
 					contador_tempo = 0; 
 					PORTB &= ~(1 << PB2); // desliga o backlight
 					lcd_limpar(); 
+					sistema_ja_ligado = 0;        // reseta login
+					estado_atual = BLOQUEADO;     // reseta estado
+					contadores_tempo[0] = 0;      // reseta timers
+					contadores_tempo[1] = 0;
 					// Aqui o sistema "morre" visualmente
 					// colocar aqui o comando UART para desligar o sistema
 				}

@@ -83,6 +83,18 @@ unsigned char tempo_n_bloqueante(unsigned int tempo) {
     return 0;
 }
 
+unsigned int contadores_tempo[2] = {0, 0};
+
+unsigned char tempo_n_bloqueante_v2(unsigned int tempo, unsigned char id) {
+    if (flag_1ms) {
+        contadores_tempo[id]++;
+    }
+    if (contadores_tempo[id] >= tempo) {
+        contadores_tempo[id] = 0;
+        return 1;
+    }
+    return 0;
+}
 
 void mostrar_hora(){// // converte inteiro para char somando com '0' (ASCII 48), separa dezena (/10) e unidade (%10)
 	lcd_caractere('0' + h/10);  // dezena
