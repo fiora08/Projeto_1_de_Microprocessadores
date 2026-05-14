@@ -4,6 +4,7 @@
 typedef struct usuario{
     char nome[15];
     char senha[5];
+    unsigned char habilitado;
 } usuario;
 
 typedef struct cartao_local{

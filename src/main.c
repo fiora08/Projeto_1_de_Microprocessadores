@@ -35,12 +35,15 @@ int main(void) {
 
 	strcpy(novo_usuario[0].nome ,"ZE ROBERTO");
 	strcpy(novo_usuario[0].senha , "1254");
+	novo_usuario[0].habilitado = 1;
 
 	strcpy(novo_usuario[1].nome ,"HUMBERTO");
 	strcpy(novo_usuario[1].senha , "2349");
+	novo_usuario[1].habilitado = 1;
 
 	strcpy(novo_usuario[2].nome ,"ADEMASTOR");
 	strcpy(novo_usuario[2].senha , "0738");
+	novo_usuario[2].habilitado = 1;
 
 	strcpy(cartao_local[0].numero_cartao, "123456");
 	cartao_local[0].saldo = 800;
