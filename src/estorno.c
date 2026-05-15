@@ -120,7 +120,7 @@ unsigned char estorno_executar(usuario *lista_usuarios) {
 		lcd_posicionar(1, 0);
 
 		while (1) {
-			gerenciar_energia();
+			energia_gerenciar();
 			teclado_atualizar();
 			tecla = teclado_obter_tecla();
 			if (tecla == 'D') break;
