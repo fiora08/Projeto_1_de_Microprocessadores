@@ -56,8 +56,6 @@ int main(void) {
 	strcpy(novo_usuario[2].senha , "0738");
 	novo_usuario[2].habilitado = 1;
 
-	strcpy(cartao_local[0].numero_cartao, "123456");
-	cartao_local[0].saldo = 800;
 
 	unsigned char tecla=0;
 	char buffer_lcd[17]; // 16 caracteres + '\0'

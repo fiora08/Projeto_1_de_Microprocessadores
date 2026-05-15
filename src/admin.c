@@ -5,20 +5,12 @@
 #include <avr/interrupt.h>
 #include <avr/iom2560.h>
 #include <util/delay.h>
-#include <string.h>
-#include "maquina.h"
 #include "timers.h"
-#include "serial.h"
 #include "lcd.h"
-#include "teclado.h"
-#include "energia.h"
-#include "interface.h"
 #include "senhas.h"
 #include "vendas.h"
-#include "maquina_protocolo.h"
-#include "protocolo.h"
-#include "login.h"
 #include "admin.h"
+#include "vendas.h"
 
 
 unsigned char menu_admin(unsigned char tecla, usuario *usuarios) {
@@ -104,15 +96,7 @@ unsigned char menu_admin(unsigned char tecla, usuario *usuarios) {
        lcd_limpar();
        tecla=0;
        break;
-        
-    
-
-
-
-
     }
-
-    
     if (tecla == '*') {
         no_menu = 0;
         entrou_menu_hora = 0;
@@ -122,3 +106,23 @@ unsigned char menu_admin(unsigned char tecla, usuario *usuarios) {
     return 0;
 }
     
+
+unsigned char admin_verificar_pendencias(venda *n_vendas, unsigned char indice_out[]){
+    unsigned char contas = 0;
+    for(int i=0; i<5; i++){
+        if(n_vendas[i].tipo_venda == VENDA_PARCELADA && n_vendas[i].num_parcelas > 0){
+            indice_out[contas++] = i;
+        }
+    }
+    for(int i=0; i<contas; i++){ //revisar após se lcd_caractere aqui nao ta travando o loop, ele costuma
+        if(i == 2) lcd_posicionar(1, 0);
+        lcd_caractere(indice_out[i] + '0');
+        lcd_caractere(':');
+        lcd_escrever_string((char*)n_vendas[indice_out[i]].valor_venda);
+        lcd_caractere(' ');
+        lcd_caractere(n_vendas[indice_out[i]].num_parcelas + '0');
+        lcd_caractere('x');
+        lcd_caractere(' ');
+}
+    return contas;
+}
