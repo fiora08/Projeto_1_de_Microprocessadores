@@ -229,7 +229,7 @@ unsigned char estorno_executar(usuario *lista_usuarios) {
 
 	char ack = (char)enviar_estorno(
 	n_vendas[idx_venda].bandeira,
-	cartao_input,
+	n_vendas[idx_venda].num_cartao,
 	(char *)n_vendas[idx_venda].valor_venda
 	);
 
