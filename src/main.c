@@ -4,6 +4,7 @@
 #include <avr/iom2560.h>
 #include <util/delay.h>
 #include <string.h>
+#include <stdio.h>
 #include "maquina.h"
 #include "timers.h"
 #include "serial.h"
@@ -17,7 +18,7 @@
 #include "protocolo.h"
 #include "login.h"
 #include "admin.h"
-
+#include "cartao_local.h"
 
 unsigned char usuario_autenticado = 0;
 
@@ -66,8 +67,169 @@ int main(void) {
 	// junto com as outras variáveis, antes do while
 	unsigned char menu_estado = MENU_PRINCIPAL;
 	unsigned char menu_desenhado = 0;
+    unsigned char num_cartoes = 0;
+
+while (1) {
+        energia_gerenciar();
+        maquina_login(novo_usuario, &usuario_autenticado);
+/*
+         if (fora_do_ar_flag == 1){
+            PORTB |= (1 << LED_fora_do_ar);}
+        else{
+        PORTB &= ~(1 << LED_fora_do_ar);}
+*/
+     
+
+        if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+
+              
 
 
+            teclado_atualizar();
+            tecla = teclado_obter_tecla();
+
+          //menu conjunto
+            if (menu_estado == MENU_PRINCIPAL) {
+                if (!menu_desenhado) {
+                    lcd_limpar();
+                    if (usuario_autenticado == 2) {
+                        lcd_escrever_string("1-Vend 2-Est");
+                        lcd_posicionar(1, 0);
+                        lcd_escrever_string("3-Adm 4-CL 5- VL");
+                    } else {
+                        lcd_escrever_string("1-Vend 2-Est ");
+                        lcd_posicionar(1, 0);
+                        lcd_escrever_string("4- CL 5- VL");
+                    }
+                    menu_desenhado = 1;
+                }
+
+                if (tecla == '1') {
+                    menu_estado = MENU_PRINCIPAL;
+                    serial_escrever("vendas ");
+                    menu_desenhado = 0;
+                    lcd_limpar();
+                }
+                if (tecla == '2') {
+                    menu_estado = MENU_PRINCIPAL;
+                    serial_escrever("estorno ");
+                    menu_desenhado = 0;
+                    lcd_limpar();
+                }
+                //menu do admin
+                if (tecla == '3' && usuario_autenticado == 2) {
+                    tecla = 0;
+                    menu_estado = MENU_ADMIN;
+                    serial_escrever("admin");
+                    menu_desenhado = 0;
+                    lcd_limpar();
+                }
+                if (tecla == '4') {
+                    num_cartoes = cadastrar_cartao_local(cartao_local, num_cartoes);
+                    serial_escrever(cartao_local[num_cartoes-1].numero_cartao);
+                    serial_escrever(" ");
+                    serial_escrever(cartao_local[num_cartoes-1].senha_cartao);
+                    serial_escrever(" saldo");
+                    
+                    menu_estado = MENU_PRINCIPAL;
+                    menu_desenhado = 0;
+}
+
+                if(tecla == '5'){
+
+                    venda_local(
+                        cartao_local,
+                        num_cartoes);
+                        menu_estado = MENU_PRINCIPAL;
+                }                
+
+
+            }
+            //entra no menu admin
+            if (menu_estado == MENU_ADMIN) {
+                if (menu_admin(tecla, novo_usuario) == 1) {
+                    menu_estado = MENU_PRINCIPAL;
+                    menu_desenhado = 0;
+                }
+            }
+
+        } else {
+            // sistema bloqueado ou desligado: reseta menu
+            menu_estado = MENU_PRINCIPAL;
+            menu_desenhado = 0;
+        }
+
+        flag_1ms = 0;
+    }
+    return 0;
+}
+
+//=========================================================================
+/*
+usuario_autenticado = 0;
+	//enviar_login(usuario_autenticado);
+	//enviar_logoff(usuario_autenticado);
+
+//LOOP P/ TESTAR A MAQUINA DE ESTADOS DE MONTAGEM DE FRAMES RECEBIDOS
+while(1){
+	energia_gerenciar();
+	if (maquina_protocolo()==1) {
+		serial_escrever(protocolo_get_mensagem());
+		lcd_escrever_string(protocolo_get_mensagem());
+		
+
+	
+	}
+	flag_1ms = 0;
+}
+return 0;
+}
+
+*/
+/*
+while (1) {
+    energia_gerenciar();
+    maquina_login(novo_usuario, &usuario_autenticado);
+
+    if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+        teclado_atualizar();
+        tecla = teclado_obter_tecla();
+
+        if (menu_estado == 0) {
+            if (!menu_desenhado) {
+                lcd_limpar();
+                if (usuario_autenticado == 2) {
+                    lcd_escrever_string("1-Vend 2-Est");
+                    lcd_posicionar(1, 0);
+                    lcd_escrever_string("3-Adm");
+                } else {
+                    lcd_escrever_string("1-Vend 2-Est");
+                }
+                menu_desenhado = 1;
+            }
+            if (tecla == '1') { menu_estado = 1; menu_desenhado = 0; }
+            if (tecla == '2') { menu_estado = 2; menu_desenhado = 0; }
+            if (tecla == '3' && usuario_autenticado == 2) { menu_estado = 4; menu_desenhado = 0; tecla = 0; }
+        }
+
+        if (menu_estado == 4) {
+            if (menu_admin(tecla, novo_usuario) == 1) {
+                menu_estado = 0;
+                menu_desenhado = 0;
+            }
+        }
+    }else {
+		menu_desenhado =0;
+		menu_estado = 0;
+	}
+
+    flag_1ms = 0;
+}
+return 0;
+}
+
+
+/*
 while (1) {
         energia_gerenciar();
         maquina_login(novo_usuario, &usuario_autenticado);
@@ -134,7 +296,7 @@ while (1) {
                 }
             }
 ======================================================
-*/
+
 
             //entra no menu admin
             if (menu_estado == MENU_ADMIN) {

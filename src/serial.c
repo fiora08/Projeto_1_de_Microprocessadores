@@ -69,7 +69,7 @@ void serial_enviar_triplo(const char* comando, char *sucesso) {
 				return; // sai da fun��o 
 			}
 			// verifica��o em tempo real : se o tempo durar mais de 2 minutos 
-			if (contador_timeout >= 120000) {
+			if (contador_timeout >= 20000) {
 				fora_do_ar_flag = 1; // liga o alarme
 			}
 		}
