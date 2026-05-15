@@ -17,6 +17,8 @@
 #include "protocolo.h"
 #include "login.h"
 #include "admin.h"
+#include "estorno.h"
+
 
 
 unsigned char usuario_autenticado = 0;
@@ -56,6 +58,12 @@ int main(void) {
 	strcpy(novo_usuario[2].senha , "0738");
 	novo_usuario[2].habilitado = 1;
 
+strcpy((char*)n_vendas[1].num_cartao,"325611");
+    strcpy((char*)n_vendas[1].senha_cartao, "32561");
+    strcpy((char*)n_vendas[1].valor_venda, "11000");
+    n_vendas[1].codigo = 1;
+    n_vendas[1].bandeira = 3;
+
 
 	unsigned char tecla=0;
 	char buffer_lcd[17]; // 16 caracteres + '\0'
@@ -91,13 +99,13 @@ while (1) {
                 }
 
                 if (tecla == '1') {
-                    menu_estado = MENU_PRINCIPAL;
+                    menu_estado = MENU_VENDAS;
                     serial_escrever("vendas ");
                     menu_desenhado = 0;
                     lcd_limpar();
                 }
                 if (tecla == '2') {
-                    menu_estado = MENU_PRINCIPAL;
+                    menu_estado = MENU_ESTORNO;
                     serial_escrever("estorno ");
                     menu_desenhado = 0;
                     lcd_limpar();
@@ -112,8 +120,8 @@ while (1) {
                 }
             }
 
-/*
-=========================================================================
+
+
             //venda
             if (menu_estado == MENU_VENDAS) {
                 if (vendas(menu_desenhado == 0)) {
@@ -128,13 +136,12 @@ while (1) {
             
             //vai pro estorno
             if (menu_estado == MENU_ESTORNO) {
-                if (estorno_executar(novo_usuario)) {
+                 estorno_executar(novo_usuario);
                     menu_estado = MENU_PRINCIPAL;
                     menu_desenhado = 0;
-                }
+                
             }
-======================================================
-*/
+
 
             //entra no menu admin
             if (menu_estado == MENU_ADMIN) {
