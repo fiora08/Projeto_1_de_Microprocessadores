@@ -6,7 +6,7 @@ static unsigned char estado_protocolo = IDLE;
 static unsigned char tipo_mensagem = 0;
 static unsigned char n;
 static unsigned char contador_payload = 0;
-static char mensagem[16];
+static char mensagem[17];
 unsigned char maquina_protocolo(){
 
     if(serial_disponivel()==1){
@@ -97,17 +97,17 @@ unsigned char maquina_protocolo(){
                 break;
             case LENDO_PAYLOAD:
 
-                if (contador_payload < 12) {// esse if faz o controle para nao escrever fora do tamanho da mensagem
+                if (contador_payload < 13) {// esse if faz o controle para nao escrever fora do tamanho da mensagem
                     mensagem[3+contador_payload] = tipo_mensagem;
                     
                 }
                 contador_payload++;
 
                 if (contador_payload>=n) {
-                    if (contador_payload < 13) {
+                    if (contador_payload < 15 ){
                         mensagem[3+contador_payload] = '\0';
                     }else {
-                        mensagem[15]= '\0'; // no pior dos casos se acabar nao chegando em 15, coloca \0 no final para conseguir ler 
+                        mensagem[17]= '\0'; // no pior dos casos se acabar nao chegando em 15, coloca \0 no final para conseguir ler 
                     }
                     
                     estado_protocolo =IDLE;

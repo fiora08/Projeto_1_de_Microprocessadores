@@ -18,9 +18,10 @@
 #include "maquina_protocolo.h"
 #include "protocolo.h"
 #include "login.h"
+#include "admin.h"
 
 
-void menu_admin(unsigned char tecla, usuario *usuarios) {
+unsigned char menu_admin(unsigned char tecla, usuario *usuarios) {
     static unsigned char mostrando_msg = 0;
     static unsigned char no_menu = 0;
     static unsigned char entrou_menu_hora = 0;
@@ -31,15 +32,15 @@ void menu_admin(unsigned char tecla, usuario *usuarios) {
             no_menu = 0;
             lcd_limpar();
         }
-        return;  
+        return 0;  
     }
 
     if (entrou_menu_hora) {
         static unsigned char modo_edicao = 1;
         static int ultimo_seg = -1;
         
-        teclado_atualizar();
-        tecla = teclado_obter_tecla();
+        //teclado_atualizar();
+        //tecla = teclado_obter_tecla();
 
             if (modo_edicao == 1) {
                 if (alterar_hora(tecla)) {
@@ -61,7 +62,7 @@ void menu_admin(unsigned char tecla, usuario *usuarios) {
                 lcd_posicionar(0, 0);
                 mostrar_hora();
             }
-            return;
+            return 0;
     
     }
 
@@ -112,6 +113,12 @@ void menu_admin(unsigned char tecla, usuario *usuarios) {
     }
 
     
-        
-    
+    if (tecla == '*') {
+        no_menu = 0;
+        entrou_menu_hora = 0;
+        mostrando_msg = 0;
+        return 1;
+    }
+    return 0;
 }
+    

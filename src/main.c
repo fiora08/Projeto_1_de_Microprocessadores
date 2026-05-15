@@ -55,7 +55,174 @@ int main(void) {
 	unsigned char usuario_autenticado;
 	unsigned char modo_edicao = 0;
 	static int ultimo_seg = -1;
+	// junto com as outras variáveis, antes do while
+	unsigned char menu_estado = 0;
+	unsigned char menu_desenhado = 0;
 
+
+
+usuario_autenticado = 0;
+	
+	//enviar_login(usuario_autenticado);
+	//enviar_logoff(usuario_autenticado);
+
+//LOOP P/ TESTAR A MAQUINA DE ESTADOS DE MONTAGEM DE FRAMES RECEBIDOS
+
+/*
+while (1) {
+    energia_gerenciar();
+    maquina_login(novo_usuario, &usuario_autenticado);
+
+    if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+        teclado_atualizar();
+        tecla = teclado_obter_tecla();
+
+        if (menu_estado == 0) {
+            if (!menu_desenhado) {
+                lcd_limpar();
+                if (usuario_autenticado == 2) {
+                    lcd_escrever_string("1-Vend 2-Est");
+                    lcd_posicionar(1, 0);
+                    lcd_escrever_string("3-Adm");
+                } else {
+                    lcd_escrever_string("1-Vend 2-Est");
+                }
+                menu_desenhado = 1;
+            }
+            if (tecla == '1') { menu_estado = 1; menu_desenhado = 0; }
+            if (tecla == '2') { menu_estado = 2; menu_desenhado = 0; }
+            if (tecla == '3' && usuario_autenticado == 2) { menu_estado = 4; menu_desenhado = 0; tecla = 0; }
+        }
+
+        if (menu_estado == 4) {
+            if (menu_admin(tecla, novo_usuario) == 1) {
+                menu_estado = 0;
+                menu_desenhado = 0;
+            }
+        }
+    }else {
+		menu_desenhado =0;
+		menu_estado = 0;
+	}
+
+    flag_1ms = 0;
+}
+return 0;
+}
+*/
+
+//main sem delays e com menus de admin mostrando
+	/*
+while (1) {
+    energia_gerenciar();
+    maquina_login(novo_usuario, &usuario_autenticado);
+
+    if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+        teclado_atualizar();
+        tecla = teclado_obter_tecla();
+
+        if (!menu_desenhado) {
+            lcd_limpar();
+            if (usuario_autenticado == 2) {
+                lcd_escrever_string("1-Vend 2-Est");
+                lcd_posicionar(1, 0);
+                lcd_escrever_string("3-Adm");
+            } else {
+                lcd_escrever_string("1-Vend 2-Est");
+            }
+            menu_desenhado = 1;
+        }
+		if (tecla == '1') { menu_estado = 1; menu_desenhado = 0; }
+if (tecla == '2') { menu_estado = 2; menu_desenhado = 0; }
+if (tecla == '3' && usuario_autenticado == 2) { 
+	menu_estado = 4;
+	 menu_desenhado = 0; 
+	tecla=0;}
+
+		if (menu_estado == 4) {
+    if (menu_admin(tecla, novo_usuario) == 1) {
+        menu_estado = 0;
+        menu_desenhado = 0;
+    }
+}
+
+    }
+
+    flag_1ms = 0;
+}
+return 0;
+}
+*/
+
+
+/*// main q esta totalmente sem delays, funciona o autenticar e le tecla
+while (1) {
+    energia_gerenciar();
+    maquina_login(novo_usuario, &usuario_autenticado);
+
+    if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+        teclado_atualizar();
+        tecla = teclado_obter_tecla();
+        if (tecla != 0) lcd_caractere(tecla);
+    }
+
+    flag_1ms = 0;
+}
+return 0;
+}*/
+
+//=============================================================================
+
+/*
+while (1) {
+    energia_gerenciar();
+    maquina_login(novo_usuario, &usuario_autenticado);
+
+    if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+
+        if (fora_do_ar_flag == 1) PORTB |= (1 << LED_fora_do_ar);
+        else                      PORTB &= ~(1 << LED_fora_do_ar);
+
+        if (usuario_autenticado == 2 || novo_usuario[usuario_autenticado].habilitado) {
+            if (menu_estado == 0) {
+                if (!menu_desenhado) {
+                    lcd_limpar();
+                    if (usuario_autenticado == 2) {
+                        lcd_escrever_string("1-Vend 2-Est");
+                        lcd_posicionar(1, 0);
+                        lcd_escrever_string("3-Adm");
+                    } else {
+                        lcd_escrever_string("1-Vend 2-Est");
+                    }
+                    menu_desenhado = 1;
+                }
+                teclado_atualizar();
+                tecla = teclado_obter_tecla();
+                if (tecla == '1') { menu_estado = 1; menu_desenhado = 0; }
+                if (tecla == '2') { menu_estado = 2; menu_desenhado = 0; }
+                if (tecla == '3' && usuario_autenticado == 2) { menu_estado = 4; menu_desenhado = 0; }
+            }
+            if (menu_estado == 4) {
+                menu_admin(tecla, novo_usuario);
+            }
+        } else {
+            if (!menu_desenhado) {
+                lcd_limpar();
+                lcd_escrever_string("OPERADOR BLOQ.");
+                menu_desenhado = 1;
+            }
+        }
+    }
+    flag_1ms = 0;
+}
+return 0;
+}
+
+//=============================================================================
+
+*/
+//main que gera o login do operador e entra nas opções do admin
+/*	
 while (1) {
     energia_gerenciar();
     maquina_login(novo_usuario, &usuario_autenticado);
@@ -87,7 +254,9 @@ while (1) {
 }
 return 0;
 }
+*/
 
+//=============================================================================
 
 /*
 //main minima q estava funcionando só com o bug do teclado 3seg
@@ -109,6 +278,8 @@ while (1) {
 return 0;
 }
 */
+
+//=============================================================================
 
 // MAIN BASICA E FUNCIONAL ATÉ O MOMENTO
 //PODEMOS CRIAR AS NOVAS VERSÕES A PARTIR DELA
@@ -164,6 +335,7 @@ return 0;
 return 0;
 }*/
 
+//=============================================================================
 
 /*
 //main para testar a função de vendas
@@ -189,6 +361,10 @@ return 0;
     return 0;
 }
 */
+
+
+//=============================================================================
+
 
 /* 
 usuario_autenticado = 0;
@@ -344,94 +520,3 @@ return 0;
 
 
 */
-
-
-// MAIN DEIXADA COMO REF, MAS ELA ESTAVA COM PROBLEMAS DE DELAY E NAO RECEBER TECLA DO TECLADO
-/*
-while (1) {
-    energia_gerenciar();
-    if (energia_sistema_ativo() == LIGADO) {
-        teclado_atualizar();
-
-		
-		if (sistema_ja_ligado == 0) {
-			lcd_limpar();
-			lcd_posicionar(0, 2);
-			lcd_escrever_string("MicPay 2026");
-			lcd_posicionar(1, 1);
-			lcd_escrever_string("Sistema Ativo");
-			sistema_ja_ligado = 1;
-		}
-		if (sistema_ja_ligado == 1 && tempo_n_bloqueante(1500)) {
-			lcd_limpar();
-			lcd_posicionar(0, 0);
-			lcd_escrever_string("Bloqueado:");
-			sistema_ja_ligado = 2;
-			estado_atual = BLOQUEADO;
-		}
-	
-        if (estado_atual == BLOQUEADO && sistema_ja_ligado ==2  ) {
-            mascara_autentica_senha(novo_usuario, 4, &usuario_autenticado);
-			if (estado_atual == DESBLOQUEADO) {
-				lcd_limpar();
-        		lcd_posicionar(0, 0);
-				lcd_escrever_string("bem vindo:");
-				lcd_posicionar(1, 0);
-       	 		lcd_escrever_string(novo_usuario[usuario_autenticado].nome);
-				sistema_ja_ligado =3;
-			}
-        }
-		if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 3 && tempo_n_bloqueante(1500)) {
-   			 lcd_limpar();
-   			 sistema_ja_ligado = 4;
-}
-        if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
-            tecla = teclado_obter_tecla();
-            if (usuario_autenticado == 2) {
-        // menu admin
-				switch(tecla) {
-					case '1': break;// habilitar/desabilitar operador0
-					case '2': break;// habilitar/desabilitar operador1
-					case '3': 
-						modo_edicao = 1;
-						break;
-					case '4': break; // pagamentos pendentes
-					case '5': break;// pendências
-				}
-				
-				if (seg != ultimo_seg) {
-					ultimo_seg = seg;
-					lcd_posicionar(0, 0);
-					lcd_escrever_string("Admin:");
-					mostrar_hora();
-				}
-				tecla=0;
-				if (modo_edicao == 1) {
-  			if (alterar_hora(tecla)) modo_edicao = 2;
-				}
-			if (modo_edicao == 2) {
-  				 if (alterar_minuto(tecla)) modo_edicao = 0;
-}
-			} else {
-				
-				
-				if (flag_1ms) {
-					lcd_posicionar(1, 0);
-					lcd_escrever_string("hora");
-					mostrar_hora();
-				}
-				
-			}
-
-		
-        }
-    }
-	flag_1ms=0;
-}
-
-
-return 0;
-
-
-}*/
-

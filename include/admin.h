@@ -3,6 +3,5 @@
 
 #include "senhas.h"
 
-void menu_admin(unsigned char tecla, usuario *usuarios);
-
+unsigned char menu_admin(unsigned char tecla, usuario *usuarios);
 #endif
