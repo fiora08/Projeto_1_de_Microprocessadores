@@ -9,7 +9,7 @@
 #include "serial.h"
 #include "maquina.h"
 #include "estorno.h"
-
+#include "energia.h"
 #define OPERADOR_NULO 255
 
 
