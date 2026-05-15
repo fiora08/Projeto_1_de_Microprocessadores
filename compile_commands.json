@@ -1,0 +1,92 @@
+[
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/Protocolo.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/Protocolo.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/Protocolo.c",
+        "output": ".pio/build/megaatmega2560/src/Protocolo.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/admin.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/admin.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/admin.c",
+        "output": ".pio/build/megaatmega2560/src/admin.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/energia.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/energia.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/energia.c",
+        "output": ".pio/build/megaatmega2560/src/energia.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/estorno.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/estorno.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/estorno.c",
+        "output": ".pio/build/megaatmega2560/src/estorno.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/lcd.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/lcd.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/lcd.c",
+        "output": ".pio/build/megaatmega2560/src/lcd.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/login.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/login.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/login.c",
+        "output": ".pio/build/megaatmega2560/src/login.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/main.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/main.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/main.c",
+        "output": ".pio/build/megaatmega2560/src/main.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/maquina.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/maquina.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/maquina.c",
+        "output": ".pio/build/megaatmega2560/src/maquina.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/maquina_protocolo.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/maquina_protocolo.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/maquina_protocolo.c",
+        "output": ".pio/build/megaatmega2560/src/maquina_protocolo.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/senhas.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/senhas.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/senhas.c",
+        "output": ".pio/build/megaatmega2560/src/senhas.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/serial.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/serial.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/serial.c",
+        "output": ".pio/build/megaatmega2560/src/serial.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/teclado.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/teclado.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/teclado.c",
+        "output": ".pio/build/megaatmega2560/src/teclado.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/timers.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/timers.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/timers.c",
+        "output": ".pio/build/megaatmega2560/src/timers.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/venda_agendada.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/venda_agendada.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/venda_agendada.c",
+        "output": ".pio/build/megaatmega2560/src/venda_agendada.o"
+    },
+    {
+        "command": "/home/eduardo/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/megaatmega2560/src/vendas.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega2560 -Os -Wall -ffunction-sections -fdata-sections -flto -DF_CPU=16000000L -DPLATFORMIO=60120 -DARDUINO_AVR_MEGA2560 -Iinclude -Isrc src/vendas.c",
+        "directory": "/home/eduardo/Projeto_1_de_Microprocessadores",
+        "file": "src/vendas.c",
+        "output": ".pio/build/megaatmega2560/src/vendas.o"
+    }
+]
