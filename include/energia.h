@@ -4,6 +4,8 @@
 #define LED_fora_do_ar PB3
 #define LED_pagamento_pendente PB7
 
+extern unsigned char usuario_autenticado;
+
 #include "maquina.h"
 // Estados poss�veis do sistema MicPay
 

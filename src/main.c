@@ -19,6 +19,16 @@
 #include "admin.h"
 
 
+unsigned char usuario_autenticado = 0;
+
+// Estados do menu principal
+#define MENU_PRINCIPAL  0
+#define MENU_VENDAS     1
+#define MENU_ESTORNO    2
+#define MENU_ADMIN      3
+
+
+
 int main(void) {
 	// Inicialização dos periféricos
 	serial_inicializar(51); //-> formula para dar o 119200 com 16 mhz foi definido o 51 para a velocidade baud. 
@@ -52,22 +62,123 @@ int main(void) {
 	unsigned char tecla=0;
 	char buffer_lcd[17]; // 16 caracteres + '\0'
 	unsigned char index = 0;
-	unsigned char usuario_autenticado;
+	//unsigned char usuario_autenticado;
 	unsigned char modo_edicao = 0;
 	static int ultimo_seg = -1;
 	// junto com as outras variáveis, antes do while
-	unsigned char menu_estado = 0;
+	unsigned char menu_estado = MENU_PRINCIPAL;
 	unsigned char menu_desenhado = 0;
 
 
+while (1) {
+        energia_gerenciar();
+        maquina_login(novo_usuario, &usuario_autenticado);
 
+        if (estado_atual == DESBLOQUEADO && sistema_ja_ligado == 4) {
+            teclado_atualizar();
+            tecla = teclado_obter_tecla();
+
+          //menu conjunto
+            if (menu_estado == MENU_PRINCIPAL) {
+                if (!menu_desenhado) {
+                    lcd_limpar();
+                    if (usuario_autenticado == 2) {
+                        lcd_escrever_string("1-Vend 2-Est");
+                        lcd_posicionar(1, 0);
+                        lcd_escrever_string("3-Adm");
+                    } else {
+                        lcd_escrever_string("1-Vend 2-Est");
+                    }
+                    menu_desenhado = 1;
+                }
+
+                if (tecla == '1') {
+                    menu_estado = MENU_PRINCIPAL;
+                    serial_escrever("vendas ");
+                    menu_desenhado = 0;
+                    lcd_limpar();
+                }
+                if (tecla == '2') {
+                    menu_estado = MENU_PRINCIPAL;
+                    serial_escrever("estorno ");
+                    menu_desenhado = 0;
+                    lcd_limpar();
+                }
+                //menu do admin
+                if (tecla == '3' && usuario_autenticado == 2) {
+                    tecla = 0;
+                    menu_estado = MENU_ADMIN;
+                    serial_escrever("admin");
+                    menu_desenhado = 0;
+                    lcd_limpar();
+                }
+            }
+
+/*
+=========================================================================
+            //venda
+            if (menu_estado == MENU_VENDAS) {
+                if (vendas(menu_desenhado == 0)) {
+                    // venda finalizada, volta ao menu
+                    menu_estado = MENU_PRINCIPAL;
+                    menu_desenhado = 0;
+                }
+                menu_desenhado = 1;
+            }
+            
+
+            
+            //vai pro estorno
+            if (menu_estado == MENU_ESTORNO) {
+                if (estorno_executar(novo_usuario)) {
+                    menu_estado = MENU_PRINCIPAL;
+                    menu_desenhado = 0;
+                }
+            }
+======================================================
+*/
+
+            //entra no menu admin
+            if (menu_estado == MENU_ADMIN) {
+                if (menu_admin(tecla, novo_usuario) == 1) {
+                    menu_estado = MENU_PRINCIPAL;
+                    menu_desenhado = 0;
+                }
+            }
+
+        } else {
+            // sistema bloqueado ou desligado: reseta menu
+            menu_estado = MENU_PRINCIPAL;
+            menu_desenhado = 0;
+        }
+
+        flag_1ms = 0;
+    }
+    return 0;
+}
+
+//=========================================================================
+/*
 usuario_autenticado = 0;
-	
 	//enviar_login(usuario_autenticado);
 	//enviar_logoff(usuario_autenticado);
 
 //LOOP P/ TESTAR A MAQUINA DE ESTADOS DE MONTAGEM DE FRAMES RECEBIDOS
+while(1){
+	energia_gerenciar();
+	if (maquina_protocolo()==1) {
+		serial_escrever(protocolo_get_mensagem());
+		lcd_escrever_string(protocolo_get_mensagem());
+		
 
+	
+	}
+	flag_1ms = 0;
+}
+return 0;
+}
+
+*/
 /*
 while (1) {
     energia_gerenciar();
@@ -111,8 +222,8 @@ return 0;
 }
 */
 
-//main sem delays e com menus de admin mostrando
-	/*
+//main com delays e sem menus de admin mostrando
+/*	
 while (1) {
     energia_gerenciar();
     maquina_login(novo_usuario, &usuario_autenticado);
@@ -155,7 +266,8 @@ return 0;
 */
 
 
-/*// main q esta totalmente sem delays, funciona o autenticar e le tecla
+/*
+// main q esta totalmente sem delays, funciona o autenticar e le tecla
 while (1) {
     energia_gerenciar();
     maquina_login(novo_usuario, &usuario_autenticado);
@@ -169,7 +281,8 @@ while (1) {
     flag_1ms = 0;
 }
 return 0;
-}*/
+}
+*/
 
 //=============================================================================
 

@@ -6,6 +6,7 @@
 #include "teclado.h"
 #include "timers.h"
 #include "lcd.h"
+#include "protocolo.h"
 // contador de tempo de quanto o bot�o ta sendo precionado
 static unsigned int contador_tempo = 0;
 // na biblioteca foi definido que desligado � 0 e ligado � 1, facilitar a logica em vez de ficar usando numeros.
@@ -61,6 +62,7 @@ void energia_gerenciar(void) {
 					estado_atual = BLOQUEADO;     // reseta estado
 					contadores_tempo[0] = 0;      // reseta timers
 					contadores_tempo[1] = 0;
+					enviar_logoff(usuario_autenticado);
 					// Aqui o sistema "morre" visualmente
 					// colocar aqui o comando UART para desligar o sistema
 				}
